@@ -110,5 +110,4 @@ if __name__ == '__main__':
     with open('data/sashimi_100_posts.json', 'w', encoding='utf-8') as json_file:
         json.dump(row_list, json_file, ensure_ascii=False, indent=4)
 
-    # time.sleep(1000)
     driver.quit()

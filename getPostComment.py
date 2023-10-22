@@ -60,5 +60,5 @@ if __name__ == '__main__':
     openFulComment(driver)
     row_list = getComment(getPage(driver))
 
-    with open('post_comment.json', 'w', encoding='utf-8') as json_file:
+    with open('data/post_comment.json', 'w', encoding='utf-8') as json_file:
         json.dump(row_list, json_file, ensure_ascii=False, indent=4)
