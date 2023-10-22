@@ -1,6 +1,14 @@
-from dotenv import load_dotenv,find_dotenv
-import os
+import pandas as pd
+import pygsheets
+import json
 
-load_dotenv(find_dotenv())
+gc = pygsheets.authorize(service_file='amazing-centaur-402708-e4103538d255.json')
 
-google_api_url = os.environ.get("GOOGLE_SHEET_API_KEY")
+sh = gc.open('facebook_club_post')
+wks = sh[0] 
+
+with open('data/club_posts.json', 'r', encoding='utf-8') as file:
+    data = json.load(file)
+
+dataset = pd.DataFrame(data)
+wks.set_dataframe(dataset, start='A1')

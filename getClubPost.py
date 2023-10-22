@@ -41,6 +41,13 @@ class ScrapeThread:
             post_id = match.group(1)
         return post_id
     
+    def extract_comments_count(self, text):
+        match = re.search(r'(\d+)', text)
+        if match:
+            return match.group(1)
+        else:
+            return text
+    
     def getPostInfo(self, elements):
         row_list = []
         for element in elements:
@@ -57,11 +64,11 @@ class ScrapeThread:
 
             like = element.select('a.ee.ef')
             if len(like) == 0: like = element.select('a.eb.ec')
-            like = like[0].text if like else ""
+            like = like[0].text if like else 0
 
             comment = element.select('footer > div:nth-child(2) > a.ef')
-            if len(comment) == 0: comment = element.select('a.ec')
-            comment = comment[0].text if comment else ""
+            if len(comment) == 0: comment = element.select('footer > div:nth-child(2) > a.ec')
+            comment = comment[0].text if comment else 0
 
             href = element.select('footer > div:nth-child(2) > a:-soup-contains("完整動態")')
             post_id = self.get_post_id(href[0]['href']) if href else ""
@@ -70,7 +77,7 @@ class ScrapeThread:
             data['name'] = name
             data['createAt'] = createAt
             data['like'] = like
-            data['comment'] = comment
+            data['comment'] = self.extract_comments_count(str(comment))
             data['article'] = full_text
             data['post_id'] = post_id
             row_list.append(data)
@@ -112,7 +119,7 @@ if __name__ == '__main__':
 
     print(result)
     print(len(result[:amount]))
-    with open('club_posts.json', 'w', encoding='utf-8') as json_file:
+    with open('data/club_posts.json', 'w', encoding='utf-8') as json_file:
         json.dump(result[:amount], json_file, ensure_ascii=False, indent=4)
 
     time_difference = (datetime.datetime.now() - previous_time).total_seconds()

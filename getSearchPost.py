@@ -1,17 +1,11 @@
-from crawler import FacebookCrawler
 from selenium import webdriver
-from dotenv import load_dotenv,find_dotenv
+from crawler import FacebookCrawler
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
-import os
-import re
-import datetime
 import time
 import json
-import urllib.parse
-import pandas as pd
 
 def getPage():
     page_content = driver.page_source
