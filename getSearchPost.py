@@ -75,6 +75,7 @@ if __name__ == '__main__':
         time.sleep(0.5)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
+        # 刪除按讚數不足 100 貼文的網頁節點
         wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.x1yztbdb.x1n2onr6.xh8yej3.x1ja2u2z')))
         driver.execute_script(
             '''
@@ -93,6 +94,7 @@ if __name__ == '__main__':
             '''
         )
         
+        # 如果抓到「無其他結果」則判斷已滑到底部
         stop_class = '.x193iq5w.xeuugli.x13faqbe.x1vvkbs.x1xmvt09.x1lliihq.x1s928wv.xhkezso.x1gmr53x.x1cpjm7i.x1fgarty.x1943h6x.xudqn12.x3x7a5m.x6prxxf.xvq8zen.xo1l8bm.xi81zsa.x2b8uid'
         stop_block = driver.find_elements(By.CSS_SELECTOR, stop_class)
         if stop_block: stop_flag = True

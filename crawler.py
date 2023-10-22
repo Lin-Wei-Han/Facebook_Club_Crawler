@@ -25,6 +25,7 @@ class FacebookCrawler:
         except Exception as e:
             print(e)
 
+    # 展開全文
     def openFullArticle(self, driver):
         try:
             target_1_class = '.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.x1vvkbs.x126k92a div .x1i10hfl.xjbqb8w.x6umtig.x1b1mbwd.xaqea5y.xav7gou.x9f619.x1ypdohk.xt0psk2.xe8uvvx.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x16tdsg8.x1hl2dhg.xggy1nq.x1a2a7pz.xt0b8zv.xzsf02u.x1s688f'
@@ -45,6 +46,7 @@ class FacebookCrawler:
         except:
             print('展開錯誤')
 
+    # 取得貼文評論數、分享數
     def getCommentShare(self, comment_and_share):
         comment = 0
         share = 0
@@ -67,6 +69,7 @@ class FacebookCrawler:
 
         return comment, share
     
+    # 取得貼文 id
     def getPostId(self, twitter_send_btn):
         href = twitter_send_btn.get_attribute('href')
 
