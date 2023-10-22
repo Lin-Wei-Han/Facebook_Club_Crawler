@@ -13,10 +13,11 @@ def process_article(article):
     pos = pos_driver(ws)
 
     short_sentence = []
+    # 停用詞
     stop_words = set(["一點", "分鐘", "更多",'什麼','之外','好幾'])
     for sentence_ws, sentence_pos in zip(ws, pos):
         for word_ws, word_pos in zip(sentence_ws, sentence_pos):
-            is_N_or_V = word_pos.startswith("N")
+            is_N_or_V = word_pos.startswith("N") 
             word_length_limit = len(word_ws) > 1
             if word_ws in stop_words: continue
             if is_N_or_V and word_length_limit:
@@ -34,7 +35,7 @@ dataset = pd.DataFrame(json_data)
 dataset["article"].fillna("", inplace=True)
 dataset["seg_result"] = dataset["article"].apply(lambda x: re.sub("[^\w\s\(\)\*\+\?\.\|]", "", str(x)))
 
-# 分塊執行
+# 分批執行
 chunk_size = 600 
 chunks = [dataset[i:i + chunk_size] for i in range(0, len(dataset), chunk_size)]
 
@@ -45,7 +46,7 @@ for chunk in chunks:
 
 combined_seg_content = pd.concat(seg_contents)
 
-# Output
+# 輸出
 
 with open('data/club_posts.json', 'r', encoding='utf-8') as json_file:
     json_data = json.load(json_file)
